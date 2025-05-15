@@ -6,7 +6,9 @@ import Image from "next/image";
 import { DashboardLinks } from "../components/DashboardLinks";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
-import { Menu } from "lucide-react";
+import { Menu, User2 } from "lucide-react";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { signOut } from "../utils/auth";
 
 export default async function DashboardLayout({children} : { children: ReactNode }) {
     const session = await requireUser();
@@ -42,7 +44,36 @@ export default async function DashboardLayout({children} : { children: ReactNode
                                 </nav>
                             </SheetContent>
                         </Sheet>
+                        <div className="flex items-center ml-auto">
+                            <DropdownMenu>
+                                <DropdownMenuTrigger asChild>
+                                    <Button className="rounded-full" variant="outline" size="icon">
+                                        <User2 />
+                                    </Button>
+                                </DropdownMenuTrigger>
+                                <DropdownMenuContent align="end">
+                                    <DropdownMenuLabel className="font-bold">My Account</DropdownMenuLabel>
+                                    <DropdownMenuSeparator />
+                                    <DropdownMenuItem asChild>
+                                        <Link href="/dashboard">Dashboard</Link>
+                                    </DropdownMenuItem>
+                                    <DropdownMenuItem asChild>
+                                        <Link href="/dashboard/invoices">Invoice</Link>
+                                    </DropdownMenuItem>
+                                    <DropdownMenuSeparator />
+                                    <DropdownMenuItem asChild>
+                                        <form className="w-full" action={async () => {
+                                            "use server";
+                                            await signOut();
+                                        }}>
+                                            <button className="w-full text-left">Log out</button>
+                                        </form>
+                                    </DropdownMenuItem>
+                                </DropdownMenuContent>
+                            </DropdownMenu>
+                        </div>
                     </header>
+                    <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">{children}</main>
                 </div>
             </div>
         </>
