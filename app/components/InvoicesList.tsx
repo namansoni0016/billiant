@@ -1,4 +1,5 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { InvoicesActions } from "./InvoicesActions";
 
 export function InvoicesList() {
     return (
@@ -20,7 +21,9 @@ export function InvoicesList() {
                     <TableCell>$5000.00</TableCell>
                     <TableCell>Paid</TableCell>
                     <TableCell>22/05/2025</TableCell>
-                    <TableCell>#1</TableCell>
+                    <TableCell className="text-right">
+                        <InvoicesActions />
+                    </TableCell>
                 </TableRow>
             </TableBody>
         </Table>
